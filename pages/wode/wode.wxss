@@ -1,0 +1,45 @@
+/* pages/wode/wode.wxss */
+page{
+  background: #F5F5F5;
+}
+.box{
+  width: 100%;
+  height: 513rpx;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.box .touxiang{
+  width: 129rpx;
+  height: 129rpx;
+  display: block;
+  margin: 59rpx auto 53rpx;
+}
+.box_ul{
+  width: 693rpx;
+  height: 136rpx;
+  margin-left: 57rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 35rpx 0 0;
+  box-sizing: border-box;
+}
+.box_left{
+  display: flex;
+  align-items: center;
+}
+.box_left .left_img{
+  width: 43rpx;
+  height: 43rpx;
+}
+.box_left text{
+  font-size: 34rpx;
+  color: #3F3F3F;
+  margin-left: 26rpx;
+}
+.jiantou{
+  width: 18rpx;
+  height: 25rpx;
+
+}

@@ -1,0 +1,10 @@
+/* pages/huodong/huodong.wxss */
+page{
+  background: #F5F5F5;
+}
+.huodong{
+  width: 672rpx;
+  height: 818rpx;
+  display: block;
+  margin: 45rpx auto;
+}

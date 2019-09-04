@@ -1,0 +1,5 @@
+/* pages/xiangq/xiangq.wxss */
+.xiangq_bei{
+  width: 100%;
+  height: 750rpx;
+}

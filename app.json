@@ -1,0 +1,48 @@
+{
+  "pages": [
+    "pages/tiku/tiku",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/wode/wode",
+    "pages/xiangq/xiangq",
+    "pages/pi_xiang/pi_xiang",
+    "pages/list/list",
+    "pages/huodong/huodong",
+    "pages/ziliao/ziliao",
+    "pages/zuoti/zuoti"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "backgroundColor": "#fff",
+    "color": "#B9B9B9",
+    "selectedColor": "#EB5139",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "img/shouye_no.png",
+        "selectedIconPath": "img/shouye_yes.png"
+      },
+      {
+        "pagePath": "pages/logs/logs",
+        "iconPath": "img/pipei_no.png",
+        "selectedIconPath": "img/pipei_yes.png"
+      },
+      {
+        "pagePath": "pages/tiku/tiku",
+        "iconPath": "img/tiku_no.png",
+        "selectedIconPath": "img/tiku_yes.png"
+      },
+      {
+        "pagePath": "pages/wode/wode",
+        "iconPath": "img/geren_no.png",
+        "selectedIconPath": "img/geren_yes.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

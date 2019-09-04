@@ -1,0 +1,23 @@
+/* pages/tiku/tiku.wxss */
+page{
+  background: #F5F5F5;
+}
+.box{
+  width: 696rpx;
+  height: 162rpx;
+  background: #ffffff;
+  margin: 33rpx auto;
+  display: flex;
+  align-items: center;
+  border-radius: 14rpx;
+}
+.box image{
+  width: 72rpx;
+  height: 72rpx;
+  display: block;
+  margin: 0 40rpx;
+}
+.box text{
+  font-size: 40rpx;
+  color: #3F3F3F;
+}

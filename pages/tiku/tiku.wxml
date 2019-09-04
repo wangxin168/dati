@@ -1,0 +1,6 @@
+<!--pages/tiku/tiku.wxml-->
+<!-- <text>pages/tiku/tiku.wxml</text> -->
+<view class="box" wx:for="{{tiku}}" wx:key="index" bindtap="list" data-name="{{item.text}}">
+  <image src="{{item.img}}"></image>
+  <text>{{item.text}}</text>
+</view>

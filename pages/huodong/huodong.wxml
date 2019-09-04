@@ -1,0 +1,4 @@
+<!--pages/huodong/huodong.wxml-->
+<!-- <text>pages/huodong/huodong.wxml</text> -->
+<image src="../../img/huodong.png" class="huodong" bindtap="xiangq"></image>
+<image src="../../img/huodong.png" class="huodong"></image>

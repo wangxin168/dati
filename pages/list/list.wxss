@@ -1,0 +1,25 @@
+/* pages/list/list.wxss */
+page{
+  background: #F5F5F5;
+}
+.list_box{
+  width: 100%;
+  background: #ffffff;
+}
+.list_li{
+  width: 717rpx;
+  margin-left: 33rpx;
+  height: 117rpx;
+  line-height: 117rpx;
+  font-size: 30rpx;
+  border-top: 1px solid #DDDDDD;
+}
+.list_hei{
+  color: #3F3F3F;
+}
+.list_hui{
+  color: #B3B3B3;
+}
+.list_li:nth-of-type(1){
+  border-top:none;
+}

@@ -1,0 +1,8 @@
+<!--pages/pi_xiang/pi_xiang.wxml-->
+<!-- <text>pages/pi_xiang/pi_xiang.wxml</text> -->
+<image src="../../img/up.png" class="up"></image>
+<view class="box">
+  <view class="box_pink">
+    22222222222
+  </view>
+</view>

@@ -1,0 +1,78 @@
+<!--pages/zuoti/zuoti.wxml-->
+<!-- <text>pages/zuoti/zuoti.wxml</text> -->
+<view class="top">
+  <view class="leixing">单选</view>
+  <view class="yeshu">2/15</view>
+</view>
+<!-- 单选 -->
+<!-- <view class="word">
+  <view class="title">1、你每天用在学习上的时间是多少呢？</view>
+  <view class="xuanxiang" wx:for="{{xuanxiang}}" wx:key="index">
+    <view class="text">{{item.text}}</view>
+    <image src="../../img/tiku_che_no.png" bindtap="danxuan_w" data-dan="{{index}}" wx:if="{{item.danxuan==false}}"></image>
+    <image src="../../img/tiku_che_yes.png" bindtap="danxuan_w" data-dan="{{index}}" wx:if="{{item.danxuan==true}}"></image>
+  </view>
+</view> -->
+<!-- 多选 -->
+<!-- <view class="word">
+  <view class="title">1、你每天用在学习上的时间是多少呢？</view>
+  <view class="xuanxiang" wx:for="{{xuanxiang2}}" wx:key="index">
+    <view class="text">{{item.text}}</view>
+    <image src="../../img/tiku_che_no.png" bindtap="duoxuan" data-duo="{{index}}" wx:if="{{item.duoxuan==false}}"></image>
+    <image src="../../img/tiku_che_yes.png" bindtap="duoxuan" data-duo="{{index}}" wx:if="{{item.duoxuan==true}}"></image>
+  </view>
+</view> -->
+<!-- 表格 -->
+<!-- <view class="word">
+  <view class="title">1、你每天用在学习上的时间是多少呢？</view>
+  <view class="box"> -->
+    <!-- 头部标题 -->
+    <!-- <view class="box_one">
+      <view></view>
+      <view>自己的</view>
+      <view>可接受的</view>
+    </view> -->
+    <!-- 中部选项 -->
+    <!-- <view class="box_one" wx:for="{{time}}" wx:key="index">
+      <view>{{item.text}}</view>
+      <view>
+        <image src="../../img/tiku_che_no.png" class="more wu" bindtap="time" data-time="{{index}}" wx:if="{{item.isSeleted==false}}"></image>
+        <image src="../../img/tiku_che_yes.png" class="more you" wx:if="{{item.isSeleted==true}}" bindtap="time" data-time="{{index}}"></image>
+      </view>
+      <view>
+        <image src="../../img/juxing_no.png" bindtap="newold" data-oldd="{{index}}" wx:if="{{item.idsele==false}}" class='more wu'></image>
+        <image src="../../img/juxing_yes.png" class='more you' wx:if="{{item.idsele==true}}" bindtap="newold" data-oldd="{{index}}"></image>
+      </view>
+    </view> -->
+    <!-- 尾部选项 -->
+    <!-- <view class="box_two">
+      <view class="chengdu">此项看着程度</view>
+      <view class="cheng_xuan">
+        <view wx:for="{{chengxuan}}" wx:key="index" bindtap="chengxuan" data-chengx="{{index}}" class="{{item.chengdu==true?'bianse':''}}">
+          {{item.text}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view> -->
+<!-- 属性加点 -->
+<view class="word">
+  <view class="title">1、设置对科学的兴趣程度(属性加点）</view>
+  <view class="con_box">
+    <view class="tit_jia">剩余权重分值{{shengqaun}}分</view>
+    <view wx:for="{{jiadian}}" wx:key="index" class="con_con">
+      <text class="zhi">{{item.text}}</text>
+      <view class="tit_right">
+        <button bindtap="jian" data-index="{{index}}">-</button>
+        <text class="num">{{item.shuxz}}</text>
+        <button bindtap="jia" data-index="{{index}}" wx:if="{{disa==0}}">+</button>
+        <button data-index="{{index}}" wx:if="{{disa==1}}">+</button>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="bott">
+  <view class="left">上一题</view>
+  <view class="right">下一题</view>
+  <view class="subm">提交</view>
+</view>

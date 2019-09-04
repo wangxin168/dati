@@ -1,0 +1,9 @@
+<!--logs.wxml-->
+<view wx:for="{{pipei}}" wx:key="index" class="box">
+  <view class="title" wx:if="{{item.open==0}}">正在匹配</view>
+  <view class="title" wx:if="{{item.open==1}}">匹配成功</view>
+  <view class="title_mini" wx:if="{{item.open==0}}">请耐心等待匹配结果</view>
+  <view class="title_mini" wx:if="{{item.open==1}}">您可以点击图片查看详情</view>
+  <image src="{{item.img}}" wx:if="{{item.open==0}}"></image>
+  <image src="{{item.img}}" wx:if="{{item.open==1}}" bindtap="pi_xiang"></image>
+</view>

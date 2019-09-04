@@ -1,0 +1,19 @@
+<!--pages/wode/wode.wxml-->
+<!-- <text>pages/wode/wode.wxml</text> -->
+<view class="box">
+  <image src="../../img/touxiang.png" class="touxiang"></image>
+  <view class="box_ul" bindtap="huodong">
+    <view class="box_left">
+      <image class="left_img" src="../../img/huodong-8.png"></image>
+      <text>我的活动</text>
+    </view>
+    <image src="../../img/fanhui.png" class="jiantou"></image>
+  </view>
+  <view class="box_ul" style="border-top:1rpx solid #DDDDDD;" bindtap="ziliao">
+    <view class="box_left">
+      <image class="left_img" src="../../img/gerenziliao.png"></image>
+      <text>我的资料</text>
+    </view>
+    <image src="../../img/fanhui.png" class="jiantou"></image>
+  </view>
+</view>

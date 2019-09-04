@@ -1,0 +1,20 @@
+/* pages/pi_xiang/pi_xiang.wxss */
+.up{
+  width: 702rpx;
+  height: 145rpx;
+  display: block;
+  margin: 28rpx auto 0;
+  
+}
+.box{
+  width: 702rpx;
+  margin: auto;
+  background: #FFEEB4;
+  padding: 0 24rpx 47rpx 20rpx;
+  box-sizing: border-box;
+}
+.box_pink{
+  width: 658rpx;
+  background: #FFFBF6;
+  border-radius: 0 0 20rpx 20rpx;
+}
