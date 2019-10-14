@@ -9,7 +9,8 @@ Page({
       {img:'../../img/jiben.png',text:'基本信息类'},
       { img: '../../img/hab.png', text: '兴趣爱好类' },
       { img: '../../img/succ.png', text: '个人成就类' }
-    ]
+    ],
+    category_lst:[]
   },
 
   /**
@@ -20,7 +21,7 @@ Page({
   },
   list:function(e){
     wx.navigateTo({
-      url: '/pages/list/list?name=' + e.currentTarget.dataset.name,
+      url: '/pages/list/list?name=' + e.currentTarget.dataset.name + '&cate_id=' + e.currentTarget.dataset.id,
     })
   },
   /**
@@ -34,7 +35,24 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this;
+    wx.request({
+      url: getApp().globalData.url + '/api.php/home/index/get_category',
+      data: {
+        // uid: wx.getStorageSync('uid')
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        console.log(res)
+        if (res.data.code == 1) {
+          that.setData({
+            category_lst: res.data.data.category_lst
+          })
+        }
+      }
+    })
   },
 
   /**

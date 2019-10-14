@@ -1,4 +1,8 @@
 <!--pages/huodong/huodong.wxml-->
 <!-- <text>pages/huodong/huodong.wxml</text> -->
-<image src="../../img/huodong.png" class="huodong" bindtap="xiangq"></image>
-<image src="../../img/huodong.png" class="huodong"></image>
+<view>
+  <view class="huo_index" wx:for="{{act}}" wx:key="index">
+    <image src="{{item.list_img}}" class="huodong" bindtap="xiangq" data-activity_id="{{item.activity_id}}"></image>
+    <view class="type" wx:if="{{item.is_end==1}}">已结束</view>
+  </view>
+</view>

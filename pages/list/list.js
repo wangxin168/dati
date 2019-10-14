@@ -26,7 +26,9 @@ Page({
         da: 1
       }
     ],
-    name:''
+    name:'',
+    cate_id:'',
+    question_lst:[]
   },
 
   /**
@@ -38,8 +40,10 @@ Page({
     })
     var that=this;
     that.setData({
-      name: options.name
+      name: options.name,
+      cate_id:options.cate_id
     })
+
   },
   zuoti:function(){
     var that=this;
@@ -58,7 +62,25 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    var that = this;
+    wx.request({
+      url: getApp().globalData.url + '/api.php/home/index/get_cate_ques',
+      data: {
+        uid: wx.getStorageSync('uid'),
+        cate_id: that.data.cate_id
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        console.log(res)
+        if (res.data.code == 1) {
+          that.setData({
+            question_lst: res.data.data.question_lst
+          })
+        }
+      }
+    })
   },
 
   /**

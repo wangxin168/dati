@@ -20,6 +20,7 @@ page{
 .touxiang image{
   width: 81rpx;
   height: 81rpx;
+  border-radius: 50%;
 }
 .nicheng{
   width: 100%;
@@ -113,7 +114,6 @@ page{
   left: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 10;
-  display: none;
 }
 .tishi_box .tishi{
   width: 537rpx;

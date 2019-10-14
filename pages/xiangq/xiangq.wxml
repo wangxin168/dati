@@ -1,3 +1,45 @@
 <!--pages/xiangq/xiangq.wxml-->
 <!-- <text>pages/xiangq/xiangq.wxml</text> -->
-<image src="../../img/xiangq_bei.png" class="xiangq_bei"></image>
+<import src="../../wxParse/wxParse.wxml" />
+<image src="{{activity_detail.detail_img}}" class="xiangq_bei"></image>
+<view class="con_detail">
+  <view class="name_detail">{{activity_detail.activity_name}}</view>
+  <view class="lianxi">联系人：{{activity_detail.activity_contacts}}</view>
+  <view class="lianxi">联系微信：{{activity_detail.wechat}}</view>
+  <view class="xian"></view>
+  <template is="wxParse" data="{{wxParseData:contents.nodes}}" />
+  <!-- 立即报名 -->
+  <view class="btn_box" wx:if="{{activity_detail.is_end==0}}">
+    <button class="btn_detail">不可报名</button>
+  </view>
+  <view class="btn_box" wx:if="{{activity_detail.is_end==2&&activity_detail.is_bm==0&&openid!=''}}">
+    <button class="btn_detail" bindtap="baoming">立即报名</button>
+  </view>
+  <view class="btn_box" wx:if="{{activity_detail.is_end==2&&activity_detail.is_bm==0&&openid==''}}">
+    <button class="btn_detail" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">立即报名</button>
+  </view>
+  <!-- 已报名继续填写 -->
+  <view class="btn_box" wx:if="{{activity_detail.is_end==2&&activity_detail.is_bm==1&&activity_detail.is_complete==0}}">
+    <button class="btn_detail" style="background: #C3C3C3;color: #555555;">已报名</button>
+    <button class="btn_detail" bindtap="tianxie">继续填写</button>
+  </view>
+  <!-- 已报名查看匹配 -->
+  <view class="btn_box" wx:if="{{activity_detail.is_end==2&&activity_detail.is_bm==1&&activity_detail.is_complete==1}}">
+    <button class="btn_detail">已报名</button>
+    <button class="btn_detail">查看匹配</button>
+  </view>
+</view>
+<!-- 弹框 -->
+<view class="wanshan_box" wx:if="{{wanshan==true}}">
+  <view class="wanshan">
+    <view class="tishi">提示</view>
+    <view class="wan_con">
+      完善资料之后，系统才可以将匹配结果发送给双方，您还没有完善资料，请先去完善资料再来匹配答题吧！
+    </view>
+    <view class="anniu">
+      <view bindtap="qvxiao">取消</view>
+      <view bindtap="queding">确定</view>
+    </view>
+  </view>
+  
+</view>

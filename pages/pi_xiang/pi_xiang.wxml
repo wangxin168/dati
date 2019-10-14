@@ -1,8 +1,9 @@
 <!--pages/pi_xiang/pi_xiang.wxml-->
 <!-- <text>pages/pi_xiang/pi_xiang.wxml</text> -->
+<import src="../../wxParse/wxParse.wxml" />
 <image src="../../img/up.png" class="up"></image>
 <view class="box">
   <view class="box_pink">
-    22222222222
+    <template is="wxParse" data="{{wxParseData:contents.nodes}}" />
   </view>
 </view>

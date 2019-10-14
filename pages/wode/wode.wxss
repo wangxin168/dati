@@ -14,6 +14,7 @@ page{
   height: 129rpx;
   display: block;
   margin: 59rpx auto 53rpx;
+  border-radius: 50px;
 }
 .box_ul{
   width: 693rpx;

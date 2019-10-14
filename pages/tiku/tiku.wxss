@@ -16,6 +16,7 @@ page{
   height: 72rpx;
   display: block;
   margin: 0 40rpx;
+  border-radius: 50%;
 }
 .box text{
   font-size: 40rpx;

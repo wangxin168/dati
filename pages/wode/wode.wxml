@@ -1,7 +1,7 @@
 <!--pages/wode/wode.wxml-->
 <!-- <text>pages/wode/wode.wxml</text> -->
 <view class="box">
-  <image src="../../img/touxiang.png" class="touxiang"></image>
+  <image src="{{avatar==''?'../../img/touxiang.png':avatar}}" class="touxiang"></image>
   <view class="box_ul" bindtap="huodong">
     <view class="box_left">
       <image class="left_img" src="../../img/huodong-8.png"></image>

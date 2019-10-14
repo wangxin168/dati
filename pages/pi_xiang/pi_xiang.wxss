@@ -17,4 +17,11 @@
   width: 658rpx;
   background: #FFFBF6;
   border-radius: 0 0 20rpx 20rpx;
+  padding: 0 38rpx;
+  box-sizing: border-box;
+}
+.wxParse-img{
+  width: 96%!important;
+  display: block;
+  margin: 30rpx auto;
 }

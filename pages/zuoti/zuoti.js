@@ -74,10 +74,12 @@ Page({
       { id: 4, text: '计算机科学', shuxz: 0}
     ],
     // 总权重值
-    quanzhong:10,
+    quanzhong:12,
     // 剩余权重
-    shengqaun:10,
-    disa:0
+    shengqaun:12,
+    disa:0,
+    array:['荔枝','龙眼','桃','苹果','葡萄'],
+    xuanze:0
   },
 
   /**
@@ -107,13 +109,13 @@ Page({
       danid: newxuanxiang[dan_index].idd
     })
     console.log(that.data.danid)
+  
   },
   // 多选
   duoxuan: function(e) {
     var that = this;
     var newxuanxiang2 = that.data.xuanxiang2;
     var duo_index = e.currentTarget.dataset.duo;
-
     newxuanxiang2[duo_index].duoxuan = !newxuanxiang2[duo_index].duoxuan
     that.setData({
       xuanxiang2: newxuanxiang2
@@ -181,6 +183,7 @@ Page({
     var zongfen = 0
     // console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
+    
     var jiadian = that.data.jiadian
     jiadian[index].shuxz = jiadian[index].shuxz+1
 
@@ -229,6 +232,14 @@ Page({
     // 剩余的权重用来渲染到页面上  剩余的权重等于总权重减去总分
     that.setData({
       shengqaun: that.data.quanzhong - zongfen
+    })
+  },
+  // 下拉选择
+  bindPickerChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      index: e.detail.value,
+      xuanze:1
     })
   },
   /**

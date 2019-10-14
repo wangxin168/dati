@@ -1,0 +1,123 @@
+<!-- <view class="top">
+  <view class="leixing">单选</view>
+  <view class="yeshu">2/15</view>
+</view> -->
+<!-- 单选 -->
+<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{cell.ti_type==1}}" wx:for-item="cell">
+  <view class="title">{{cell.ti_tree}}</view>
+  <view class="xuanxiang" wx:for="{{cell.options}}" wx:key="index">
+    <view class="text">{{item.v}}</view>
+    <image src="../../img/tiku_che_no.png" bindtap="danxuan_w" data-dan="{{index}}" data-id="{{cell.id}}" wx:if="{{item.is_f==false}}"></image>
+    <image src="../../img/tiku_che_yes.png" bindtap="danxuan_w" data-dan="{{index}}" data-id="{{cell.id}}" wx:if="{{item.is_f==true}}"></image>
+  </view>
+</view>
+<!-- 多选 -->
+<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{cell.ti_type==2}}" wx:for-item="cell">
+  <view class="title">{{cell.ti_tree}}</view>
+  <view class="xuanxiang" wx:for="{{cell.options}}" wx:key="index">
+    <view class="text">{{item.v}}</view>
+    <image src="../../img/tiku_che_no.png" bindtap="duoxuan" data-duo="{{index}}" wx:if="{{item.is_f==false}}" data-id="{{cell.id}}"></image>
+    <image src="../../img/tiku_che_yes.png" bindtap="duoxuan" data-duo="{{index}}" wx:if="{{item.is_f==true}}" data-id="{{cell.id}}"></image>
+  </view>
+</view>
+<!-- 表格 -->
+<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{cell.ti_type==6}}" wx:for-item="cell">
+  <view class="title">{{cell.ti_tree}}</view>
+  <view class="box">
+    <!-- 头部标题 -->
+    <view class="box_one">
+      <view></view>
+      <view>{{cell.questions_dan}}</view>
+      <view>{{cell.questions_duo}}</view>
+    </view>
+    <!-- 中部选项 -->
+    <view class="box_one" wx:for="{{cell.options}}" wx:key="index">
+      <view>{{item.v}}</view>
+      <view>
+        <image src="../../img/tiku_che_no.png" class="more wu" bindtap="time" data-time="{{index}}" wx:if="{{item.is_f==false}}" data-id="{{cell.id}}"></image>
+        <image src="../../img/tiku_che_yes.png" class="more you" wx:if="{{item.is_f==true}}" bindtap="time" data-time="{{index}}" data-id="{{cell.id}}"></image>
+      </view>
+      <view>
+        <image src="../../img/juxing_no.png" bindtap="newold" data-oldd="{{index}}" wx:if="{{item.is_f2==false}}" class='more wu' data-id="{{cell.id}}"></image>
+        <image src="../../img/juxing_yes.png" class='more you' wx:if="{{item.is_f2==true}}" bindtap="newold" data-oldd="{{index}}" data-id="{{cell.id}}"></image>
+      </view>
+    </view>
+    <!-- 尾部选项 -->
+    <view class="box_two">
+      <view class="chengdu">{{cell.questions_dan2}}</view>
+      <view class="cheng_xuan">
+        <view wx:for="{{cell.other_options}}" wx:key="index" bindtap="chengxuan" data-chengx="{{index}}" class="{{item.is_f3==true?'bianse':''}}" data-id="{{cell.id}}">
+          {{item.v}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 属性加点 -->
+<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{cell.ti_type==7}}" wx:for-item="cell">
+  <view class="title">{{cell.ti_tree}}</view>
+  <view class="con_box">
+    <view class="tit_jia">剩余权重分值{{shengqaun}}分</view>
+    <view class="con_con" wx:for="{{cell.options}}" wx:key="index">
+      <text class="zhi">{{item.v}}</text>
+      <view class="tit_right">
+        <button bindtap="jian" data-index="{{index}}" data-id="{{cell.id}}">-</button>
+        <text class="num">{{item.chu}}</text>
+        <button bindtap="jia" data-index="{{index}}" wx:if="{{disa==0}}" data-id="{{cell.id}}">+</button>
+        <button data-index="{{index}}" wx:if="{{disa==1}}">+</button>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 填空题 -->
+<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{item.ti_type==4}}">
+  <view class="title">{{item.ti_tree}}</view>
+  <input placeholder="请输入你的答案" class="tiankong" bindinput="tiankong" data-id="{{item.id}}" data-titype="{{item.ti_type}}"></input>
+</view>
+<!-- 简答题 -->
+<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{item.ti_type==5}}">
+  <view class="title">你的学校是什么名字</view>
+  <textarea placeholder="请输入你的答案" class="jianda" bindinput="jianda" data-id="{{item.id}}" data-titype="{{item.ti_type}}"></textarea>
+</view>
+<!-- 下拉框 -->
+<!-- 一个 -->
+<view class="word" wx:for="{{tiku}}" wx:key="ind" wx:if="{{item.ti_type==3&&item.opt_count==1}}">
+  <view class="title">{{item.ti_tree}}</view>
+  <picker bindchange="bindPickerChange" value="{{nali}}" range="{{item.options_1}}">
+    <view class="picker">
+      <text wx:if="{{xuanze==0}}">请选择</text>
+      <text wx:else>{{item.options_1[nali]}}</text>
+    </view>
+  </picker>
+</view>
+<!-- 两个无关联 -->
+<view class="word" wx:for="{{tiku}}" wx:key="ind" wx:if="{{item.ti_type==3&&item.opt_count==2&&item.select_type==1}}">
+  <view class="title">{{item.ti_tree}}</view>
+  <picker bindchange="bindPickerChange" value="{{nali}}" range="{{item.options_1}}">
+    <view class="picker">
+      <text wx:if="{{xuanze==0}}">请选择</text>
+      <text wx:else>{{item.options_1[nali]}}</text>
+    </view>
+  </picker>
+  <picker bindchange="bindPickerChange2" value="{{diernali}}" range="{{item.options_2}}" style="margin-top:20rpx;">
+    <view class="picker">
+      <text wx:if="{{xuanze2==0}}">请选择</text>
+      <text wx:else>{{item.options_2[diernali]}}</text>
+    </view>
+  </picker>
+</view>
+<!-- 两个哟关联 -->
+<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{item.ti_type==3&&item.select_type==2||item.select_type==3}}">
+  <view class="title">{{item.ti_tree}}</view>
+  <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{index}}" range="{{item.options}}">
+    <view class="picker">
+      <text wx:if="{{xuanze==0}}">请选择</text>
+      <text wx:else>{{item.options[index]}}</text>
+    </view>
+  </picker>
+</view>
+<view class="bott">
+  <view class="left" bindtap="prev">上一页</view>
+  <view class="right" bindtap="next">下一页</view>
+  <view class="subm" bindtap="subm">提交</view>
+</view>

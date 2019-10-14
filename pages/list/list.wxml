@@ -1,7 +1,7 @@
 <!--pages/list/list.wxml-->
 <!-- <text>pages/list/list.wxml</text> -->
 <view class="list_box">
-  <view wx:for="{{array}}" wx:key="index" class="list_li {{item.da==0?'list_hei':'list_hui'}}" bindtap="zuoti">
-    {{item.text}}
+  <view wx:for="{{question_lst}}" wx:key="index" class="list_li {{item.is_tj==0?'list_hei':'list_hui'}}" bindtap="zuoti">
+    {{item.ti_tree}}
   </view>
 </view>
