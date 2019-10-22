@@ -109,10 +109,10 @@
 <!-- 两个哟关联 -->
 <view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{item.ti_type==3&&item.select_type==2||item.select_type==3}}">
   <view class="title">{{item.ti_tree}}</view>
-  <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{index}}" range="{{item.options}}">
+  <picker  mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" value="{{index}}" range="{{multiArray}}">
     <view class="picker">
       <text wx:if="{{xuanze==0}}">请选择</text>
-      <text wx:else>{{item.options[index]}}</text>
+      <text wx:else>{{multiArray[0][multiIndex[0]]}} {{multiArray[1][multiIndex[1]]}}</text>
     </view>
   </picker>
 </view>

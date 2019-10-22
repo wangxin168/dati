@@ -6,7 +6,7 @@ Page({
   data: {
     // 单选的值
     danid: '',
-    
+
     // 总权重值
     quanzhong: '',
     // 剩余权重
@@ -24,9 +24,12 @@ Page({
     olddarr: [],
     // 程度的值
     chengid: '',
-    page:1,
-    tiankong:'',
-    elmrnt_d:{}
+    page: 1,
+    tiankong: '',
+    elmrnt_d: '',
+    fuhe_id: '',
+    shuxing: [],
+    duo_sec:[]
   },
 
   /**
@@ -87,9 +90,9 @@ Page({
         // 有就删除没有就添加
         // let pos = that.data.duoarr.indexOf(duo_index);
         // if (pos < 0) {
-          // that.data.duoarr.push(duo_index)
+        // that.data.duoarr.push(duo_index)
         // } else {
-          // that.data.duoarr.splice(pos, 1)
+        // that.data.duoarr.splice(pos, 1)
         // }
         // console.log(that.data.duoarr)
       }
@@ -123,7 +126,8 @@ Page({
       that.setData({
         tiku: tiku,
         // 第几个
-        timedanid: timedan_index
+        timedanid: timedan_index,
+        fuhe_id: tiku[i].id
       })
     }
     console.log(that.data.timedanid)
@@ -152,6 +156,8 @@ Page({
           that.data.olddarr.splice(pos, 1)
         }
         console.log(that.data.olddarr)
+
+
       }
     }
 
@@ -273,19 +279,47 @@ Page({
       xuanze2: 1
     })
   },
-  tiankong:function(e){
+  bindMultiPickerChange: function (e) {
     console.log(e)
-    var that=this;
-    that.setData({
-      tiankong: { 'id': e.currentTarget.dataset.id, 'value': e.detail.value, 'ti_type': e.currentTarget.dataset.titype }
+    var class_key = 0;
+    var classList = this.data.duo_sec;
+
+    var select_key = e.detail.value[1];
+    var real_key = select_key;
+    if (real_key < class_key) {
+      this.setData({
+        class_id: 0
+      })
+    } else {
+      this.setData({
+        class_id: classList[real_key]['id']　　　　　　// class_id 二级id
+      })
+    }
+    this.setData({
+      multiIndex: e.detail.value
     })
-    console.log(that.data.tiankong)
   },
-  jianda: function (e) {
+  tiankong: function(e) {
     console.log(e)
     var that = this;
     that.setData({
-      jianda: { 'id': e.currentTarget.dataset.id, 'value': e.detail.value, 'ti_type': e.currentTarget.dataset.titype }
+      tiankong: {
+        'id': e.currentTarget.dataset.id,
+        'value': e.detail.value,
+        'ti_type': e.currentTarget.dataset.titype
+      }
+    })
+    console.log(that.data.tiankong)
+  },
+  jianda: function(e) {
+    console.log(e)
+    var that = this;
+    that.setData({
+      jianda: {
+        'id': e.currentTarget.dataset.id,
+        'value': e.detail.value,
+        'ti_type': e.currentTarget.dataset.titype
+      }
     })
     console.log(that.data.jianda)
   },
@@ -293,6 +327,14 @@ Page({
     var that = this;
     console.log(that.data.jianda)
     console.log(that.data.tiankong)
+    console.log(that.data.timedanid)
+    var ollarr_l = that.data.olddarr.join(";");
+    var fuhe = {
+      'id': that.data.fuhe_id,
+      'value': that.data.timedanid + "|" + ollarr_l + "|" + that.data.chengid,
+      'ti_type': '1'
+    }
+    console.log(fuhe)
     var tiku = that.data.tiku
     for (var i = 0; i < tiku.length; i++) {
       // 单选
@@ -304,7 +346,7 @@ Page({
             console.log(index)
             that.data.elmrnt_d = {
               'id': tiku[i].id,
-              'value': index,
+              'value': that.data.timedanid,
               'ti_type': '1'
             }
             // -------------------
@@ -316,8 +358,8 @@ Page({
         xiang.forEach(function(element, index) {
           if (element.is_f == true) {
             that.data.duoarr.push(index)
-            console.log(that.data.duoarr)
-            var index_Arr = that.data.duoarr.join(",");
+            // console.log(that.data.duoarr)
+            var index_Arr = that.data.duoarr.join(";");
             that.data.elmrnt_duo = {
               'id': tiku[i].id,
               'value': index_Arr,
@@ -326,6 +368,19 @@ Page({
             // -------------------
             console.log(that.data.elmrnt_duo)
           }
+        });
+      } else if (tiku[i].ti_type == 7) {
+        var xiang = tiku[i].options;
+        xiang.forEach(function(element, index) {
+          console.log(element.chu)
+          that.data.shuxing.push(element.chu)
+          var shuxing_arr = that.data.shuxing.join(";");
+          var shuxing_id = {
+            'id': tiku[i].id,
+            'value': shuxing_arr,
+            'ti_type': '2'
+          }
+          console.log(shuxing_id)
         });
       }
 
@@ -337,14 +392,45 @@ Page({
   onReady: function() {
 
   },
-  xuanran:function(){
+  erji: function (classid) {
+    if (classid) {
+      this.setData({
+        teach_id: classid
+      })
+    }
+    var that = this
+    wx.request({
+      url: getApp().globalData.url + "/api.php/home/index/get_citys",
+      data: {
+        province_id: that.data.teach_id
+      },
+      success: res => {
+        console.log(res)
+        // that.setData({
+        //   classerji: res.data.data
+        // })
+        // var class_two = that.data.classerji
+        // var classarr2 = []
+        // for (var i = 0; i < class_two.length; i++) {
+        //   classarr2.push(class_two[i].name)
+        // }
+
+        // var classArr = that.data.classone
+        // that.setData({
+        //   multiArray: [classArr, classarr2],
+        //   classArr
+        // })
+      }
+    })
+  },
+  xuanran: function() {
     var that = this;
     wx.request({
       url: getApp().globalData.url + '/api.php/home/index/show_questions',
       data: {
         uid: wx.getStorageSync('uid'),
         activity_id: that.data.activity_id,
-        page:that.data.page
+        page: that.data.page
       },
       header: {
         'content-type': 'application/json' // 默认值
@@ -353,14 +439,31 @@ Page({
         console.log(res)
         if (res.data.code == 1) {
           var tiku = res.data.data.tiku
+          var classid=''
           for (var i = 0; i < tiku.length; i++) {
             console.log()
-            if(tiku[i].ti_type==7){
+            if (tiku[i].ti_type == 7) {
               that.setData({
                 quanzhong: tiku[i].total_score,
                 shengqaun: tiku[i].total_score
               })
+            } else if (tiku[i].ti_type == 3){
+              // console.log(tiku[i].options)
+              var xiala = tiku[i].options
+              xiala.forEach(function (element, index) {
+                that.data.duo_sec.push(element.area_name)
+                that.setData({
+                  multiArray: [that.data.duo_sec,[]],
+                })
+                classid = element.id
+                // console.log(that.data.multiArray)
+              });
+              
             }
+          }
+          
+          if (classid) {
+            that.erji(classid)
           }
           that.setData({
             tiku: res.data.data.tiku
@@ -373,17 +476,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    var that=this;
+    var that = this;
     that.xuanran();
   },
-  next:function(){
-    var that=this;
+  next: function() {
+    var that = this;
     that.setData({
-      page:that.data.page+1
+      page: that.data.page + 1
     })
     that.xuanran();
   },
-  prev:function(){
+  prev: function() {
     var that = this;
     that.setData({
       page: that.data.page - 1

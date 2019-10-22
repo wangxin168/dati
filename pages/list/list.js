@@ -45,10 +45,10 @@ Page({
     })
 
   },
-  zuoti:function(){
+  zuoti:function(e){
     var that=this;
     wx.navigateTo({
-      url: '/pages/zuoti/zuoti?name=' + that.data.name,
+      url: '/pages/zuoti/zuoti?name=' + that.data.name + '&id=' + that.data.cate_id + '&sorts=' + e.currentTarget.dataset.sorts,
     })
   },
   /**
