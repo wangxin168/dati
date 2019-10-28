@@ -83,7 +83,7 @@
 <!-- 一个 -->
 <view class="word" wx:for="{{tiku}}" wx:key="ind" wx:if="{{item.ti_type==3&&item.opt_count==1}}">
   <view class="title">{{item.ti_tree}}</view>
-  <picker bindchange="bindPickerChange" value="{{nali}}" range="{{item.options_1}}">
+  <picker bindchange="bindPickerChange" value="{{nali}}" range="{{item.options_1}}" data-id="{{item.id}}">
     <view class="picker">
       <text wx:if="{{xuanze==0}}">请选择</text>
       <text wx:else>{{item.options_1[nali]}}</text>
@@ -93,13 +93,13 @@
 <!-- 两个无关联 -->
 <view class="word" wx:for="{{tiku}}" wx:key="ind" wx:if="{{item.ti_type==3&&item.opt_count==2&&item.select_type==1}}">
   <view class="title">{{item.ti_tree}}</view>
-  <picker bindchange="bindPickerChange" value="{{nali}}" range="{{item.options_1}}">
+  <picker bindchange="bindPickerChange3" value="{{nali3}}" range="{{item.options_1}}" data-id="{{item.id}}">
     <view class="picker">
-      <text wx:if="{{xuanze==0}}">请选择</text>
-      <text wx:else>{{item.options_1[nali]}}</text>
+      <text wx:if="{{xuanze3==0}}">请选择</text>
+      <text wx:else>{{item.options_1[nali3]}}</text>
     </view>
   </picker>
-  <picker bindchange="bindPickerChange2" value="{{diernali}}" range="{{item.options_2}}" style="margin-top:20rpx;">
+  <picker bindchange="bindPickerChange2" value="{{diernali}}" range="{{item.options_2}}" style="margin-top:20rpx;" data-id="{{item.id}}">
     <view class="picker">
       <text wx:if="{{xuanze2==0}}">请选择</text>
       <text wx:else>{{item.options_2[diernali]}}</text>
@@ -107,12 +107,22 @@
   </picker>
 </view>
 <!-- 两个哟关联 -->
-<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{item.ti_type==3&&item.select_type==2||item.select_type==3}}">
+<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{item.ti_type==3&&item.select_type==3}}">
   <view class="title">{{item.ti_tree}}</view>
   <picker  mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" value="{{index}}" range="{{multiArray}}">
     <view class="picker">
       <text wx:if="{{xuanze==0}}">请选择</text>
       <text wx:else>{{multiArray[0][multiIndex[0]]}} {{multiArray[1][multiIndex[1]]}}</text>
+    </view>
+  </picker>
+</view>
+<!-- 时间 -->
+<view class="word"  wx:for="{{tiku}}" wx:key="index" wx:if="{{item.ti_type==3&&item.select_type==2}}">
+  <view class="title">{{item.ti_tree}}</view>
+  <picker mode="date" value="{{date}}" start="1980-01-01" end="2031-09-01" bindchange="bindDateChange" data-id="{{item.id}}">
+    <view class="picker">
+      <text wx:if="{{xuanze==0}}">请选择</text>
+      <text wx:else>{{date}}</text>
     </view>
   </picker>
 </view>
