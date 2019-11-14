@@ -26,7 +26,7 @@
   <!-- 已报名查看匹配 -->
   <view class="btn_box" wx:if="{{activity_detail.is_end==2&&activity_detail.is_bm==1&&activity_detail.is_complete==1}}">
     <button class="btn_detail">已报名</button>
-    <button class="btn_detail">查看匹配</button>
+    <button class="btn_detail" bindtap="chakan">查看匹配</button>
   </view>
 </view>
 <!-- 弹框 -->

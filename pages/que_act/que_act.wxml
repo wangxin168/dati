@@ -3,7 +3,7 @@
   <view class="yeshu">2/15</view>
 </view> -->
 <!-- 单选 -->
-<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{cell.ti_type==1}}" wx:for-item="cell">
+<view class="word" wx:for="{{active}}" wx:key="index" wx:if="{{cell.ti_type==1}}" wx:for-item="cell">
   <view class="title">{{cell.ti_tree}}</view>
   <view class="xuanxiang" wx:for="{{cell.options}}" wx:key="index">
     <view class="text">{{item.v}}</view>
@@ -12,7 +12,7 @@
   </view>
 </view>
 <!-- 多选 -->
-<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{cell.ti_type==2}}" wx:for-item="cell">
+<view class="word" wx:for="{{active}}" wx:key="index" wx:if="{{cell.ti_type==2}}" wx:for-item="cell">
   <view class="title">{{cell.ti_tree}}</view>
   <view class="xuanxiang" wx:for="{{cell.options}}" wx:key="index">
     <view class="text">{{item.v}}</view>
@@ -21,7 +21,7 @@
   </view>
 </view>
 <!-- 表格 -->
-<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{cell.ti_type==6}}" wx:for-item="cell">
+<view class="word" wx:for="{{active}}" wx:key="index" wx:if="{{cell.ti_type==6}}" wx:for-item="cell">
   <view class="title">{{cell.ti_tree}}</view>
   <view class="box">
     <!-- 头部标题 -->
@@ -54,7 +54,7 @@
   </view>
 </view>
 <!-- 属性加点 -->
-<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{cell.ti_type==7}}" wx:for-item="cell">
+<view class="word" wx:for="{{active}}" wx:key="index" wx:if="{{cell.ti_type==7}}" wx:for-item="cell">
   <view class="title">{{cell.ti_tree}}</view>
   <view class="con_box">
     <view class="tit_jia">剩余权重分值{{shengqaun}}分</view>
@@ -70,18 +70,18 @@
   </view>
 </view>
 <!-- 填空题 -->
-<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{item.ti_type==4}}">
+<view class="word" wx:for="{{active}}" wx:key="index" wx:if="{{item.ti_type==4}}">
   <view class="title">{{item.ti_tree}}</view>
-  <input placeholder="请输入你的答案" class="tiankong" bindinput="tiankong" data-id="{{item.id}}" data-titype="{{item.ti_type}}"></input>
+  <input placeholder="请输入你的答案" class="tiankong" bindinput="tiankong" data-id="{{item.id}}" data-titype="{{item.ti_type}}" value="{{item.answer}}"></input>
 </view>
 <!-- 简答题 -->
-<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{item.ti_type==5}}">
-  <view class="title">你的学校是什么名字</view>
-  <textarea placeholder="请输入你的答案" class="jianda" bindinput="jianda" data-id="{{item.id}}" data-titype="{{item.ti_type}}"></textarea>
+<view class="word" wx:for="{{active}}" wx:key="index" wx:if="{{item.ti_type==5}}">
+  <view class="title">{{item.ti_tree}}</view>
+  <textarea placeholder="请输入你的答案" class="jianda" bindinput="jianda" data-id="{{item.id}}" data-titype="{{item.ti_type}}" value="{{item.answer}}"></textarea>
 </view>
 <!-- 下拉框 -->
 <!-- 一个 -->
-<view class="word" wx:for="{{tiku}}" wx:key="ind" wx:if="{{item.ti_type==3&&item.opt_count==1}}">
+<view class="word" wx:for="{{active}}" wx:key="ind" wx:if="{{item.ti_type==3&&item.opt_count==1}}">
   <view class="title">{{item.ti_tree}}</view>
   <picker bindchange="bindPickerChange" value="{{nali}}" range="{{item.options_1}}" data-id="{{item.id}}">
     <view class="picker">
@@ -91,7 +91,7 @@
   </picker>
 </view>
 <!-- 两个无关联 -->
-<view class="word" wx:for="{{tiku}}" wx:key="ind" wx:if="{{item.ti_type==3&&item.opt_count==2&&item.select_type==1}}">
+<view class="word" wx:for="{{active}}" wx:key="ind" wx:if="{{item.ti_type==3&&item.opt_count==2&&item.select_type==1}}">
   <view class="title">{{item.ti_tree}}</view>
   <picker bindchange="bindPickerChange3" value="{{nali3}}" range="{{item.options_1}}" data-id="{{item.id}}">
     <view class="picker">
@@ -107,9 +107,9 @@
   </picker>
 </view>
 <!-- 两个哟关联 -->
-<view class="word" wx:for="{{tiku}}" wx:key="index" wx:if="{{item.ti_type==3&&item.select_type==3}}">
+<view class="word" wx:for="{{active}}" wx:key="index" wx:if="{{item.ti_type==3&&item.select_type==3}}">
   <view class="title">{{item.ti_tree}}</view>
-  <picker  mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" value="{{index}}" range="{{multiArray}}">
+  <picker  mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" value="{{index}}" range="{{multiArray}}" data-id="{{item.id}}" >
     <view class="picker">
       <text wx:if="{{xuanze==0}}">请选择</text>
       <text wx:else>{{multiArray[0][multiIndex[0]]}} {{multiArray[1][multiIndex[1]]}}</text>
@@ -117,17 +117,17 @@
   </picker>
 </view>
 <!-- 时间 -->
-<view class="word"  wx:for="{{tiku}}" wx:key="index" wx:if="{{item.ti_type==3&&item.select_type==2}}">
+<view class="word"  wx:for="{{active}}" wx:key="index" wx:if="{{item.ti_type==3&&item.select_type==2}}">
   <view class="title">{{item.ti_tree}}</view>
   <picker mode="date" value="{{date}}" start="1980-01-01" end="2031-09-01" bindchange="bindDateChange" data-id="{{item.id}}">
     <view class="picker">
-      <text wx:if="{{xuanze==0}}">请选择</text>
+      <text wx:if="{{xuanze2==0}}">请选择</text>
       <text wx:else>{{date}}</text>
     </view>
   </picker>
 </view>
 <view class="bott">
-  <view class="left" bindtap="prev">上一页</view>
-  <view class="right" bindtap="next">下一页</view>
+  <view class="left" bindtap="prev" wx:if="{{prev_page==0}}">上一页</view>
+  <view class="right" bindtap="next" wx:if="{{next_page==0}}">下一页</view>
   <view class="subm" bindtap="subm">提交</view>
 </view>
