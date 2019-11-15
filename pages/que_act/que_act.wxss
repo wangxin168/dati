@@ -37,8 +37,14 @@
   margin-bottom: 60rpx;
   font-size: 34rpx;
   color: #3f3f3f;
+  display: flex;
+  align-items: center;
 }
-
+.title .xing{
+  width: 22rpx;
+  height: 22rpx;
+  margin-right: 6rpx;
+}
 .xuanxiang {
   margin-bottom: 52rpx;
   display: flex;
@@ -60,7 +66,8 @@
   display: flex;
   padding: 0 50rpx;
   box-sizing: border-box;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: space-around;
   margin: 149rpx 0;
 }
 

@@ -295,6 +295,7 @@ Page({
     var shux_id = e.currentTarget.dataset.id
     that.data.shux_id = shux_id
     var tiku = that.data.active
+    var shu = that.data.shuxing=[]
     for (var i = 0; i < tiku.length; i++) {
       if (tiku[i].ti_type == 7 && tiku[i].id == shux_id) {
         var shuxing = tiku[i].options
@@ -302,8 +303,24 @@ Page({
         for (var j = 0; j < shuxing.length; j++) {
           zongfen += shuxing[j].chu
         }
+        shuxing.forEach(function (element, index) {
+          shu.push(element.chu)
+          that.data.shuxing = shu.join(";");
+          console.log(that.data.shuxing)
+        });
       }
     }
+    var key_con = that.data.zimu[that.data.page - 1]
+    var answer = that.data.all[key_con]
+    answer.forEach(function (element, index) {
+      // console.log(element)
+      // console.log(that.data.shux_id)
+      if (element.id == that.data.shux_id) {
+        // 当前这个题的对象
+        that.data.all[key_con][index].answer = that.data.shuxing
+        console.log(that.data.all[key_con])
+      }
+    });
     that.setData({
       active: tiku
     })
@@ -516,30 +533,30 @@ Page({
     var that = this;
     // 属性加点
     var tiku = that.data.tiku
-    var shu = that.data.shuxing=[]
-    // console.log(shu)
-    for (var i = 0; i < tiku.length; i++) {
-      if (tiku[i].id == that.data.shux_id) {
-        var shuxing_con = tiku[i].options
-        // console.log(shuxing_con)
-        shuxing_con.forEach(function (element, index) {
-          shu.push(element.chu)
-          that.data.shuxing = shu.join(";");
-          console.log(that.data.shuxing)
-        });
-      }
-    }
-    var key_con = that.data.zimu[that.data.page - 1]
-    var answer = that.data.all[key_con]
-    answer.forEach(function (element, index) {
-      // console.log(element)
-      // console.log(that.data.shux_id)
-      if (element.id == that.data.shux_id) {
-        // 当前这个题的对象
-        that.data.all[key_con][index].answer = that.data.shuxing
-        console.log(that.data.all[key_con])
-      }
-    });
+    // var shu = that.data.shuxing=[]
+    // // console.log(shu)
+    // for (var i = 0; i < tiku.length; i++) {
+    //   if (tiku[i].id == that.data.shux_id) {
+    //     var shuxing_con = tiku[i].options
+    //     // console.log(shuxing_con)
+    //     shuxing_con.forEach(function (element, index) {
+    //       shu.push(element.chu)
+    //       that.data.shuxing = shu.join(";");
+    //       console.log(that.data.shuxing)
+    //     });
+    //   }
+    // }
+    // var key_con = that.data.zimu[that.data.page - 1]
+    // var answer = that.data.all[key_con]
+    // answer.forEach(function (element, index) {
+    //   // console.log(element)
+    //   // console.log(that.data.shux_id)
+    //   if (element.id == that.data.shux_id) {
+    //     // 当前这个题的对象
+    //     that.data.all[key_con][index].answer = that.data.shuxing
+    //     console.log(that.data.all[key_con])
+    //   }
+    // });
     
     // // 复合
     // var ollarr_l = that.data.olddarr.join(";");
@@ -552,33 +569,50 @@ Page({
     //   }
     // });
     console.log(that.data.all)
+    var is_sub=0
     for (var j=0;j<=that.data.page-1;j++){
       var a = that.data.zimu[j]
       // console.log(that.data.all[a].concat(that.data.all[a]))
       var app = that.data.all[a];
       app.forEach(function (element, index) {
         // console.log(element)
-        var b = { 'id': element.id, 'value': element.answer, 'ti_type': element.ti_type}
+        if (element.answer == '' && element.is_xuantian==0){
+          wx.showToast({
+            title: '有必答题没有填哦',
+            icon:'none'
+          })
+          console.log(element.ti_tree)
+          is_sub=1
+        }
+        var b = { 'id': element.id, 'value': element.answer, 'ti_type': element.ti_type }
         // console.log(b)
         that.data.daan_arr.push(b)
+        // console.log(that.data.daan_arr)
       });
     }
-    console.log(that.data.daan_arr)
-    return;
-    wx.request({
-      url: getApp().globalData.url + '/api.php/home/index/add_act_ques_answer',
-      data: {
-        uid: wx.getStorageSync('uid'),
-        activity_id: that.data.activity_id,
-        answer: that.data.daan_arr
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success(res) {
-        console.log(res)
-      }
-    })
+    if (is_sub==0){
+      console.log(that.data.daan_arr)
+      return;
+      wx.request({
+        url: getApp().globalData.url + '/api.php/home/index/add_act_ques_answer',
+        data: {
+          uid: wx.getStorageSync('uid'),
+          activity_id: that.data.activity_id,
+          answer: that.data.daan_arr
+        },
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success(res) {
+          console.log(res)
+        }
+      })
+    }
+    
+    // that.data.daan_arr.forEach(function(element,index){
+    //   console.log(element)
+    // })
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
