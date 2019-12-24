@@ -131,3 +131,12 @@
   <view class="right" bindtap="next" wx:if="{{next_page==0}}">下一页</view>
   <view class="subm" bindtap="subm" wx:if="{{next_page==1}}">提交</view>
 </view>
+<!-- 必答题未答提示 -->
+<view class="tips_box" wx:if="{{tips_box==true}}">
+  <view class="tips">
+    <view class="tips_title">提示</view>
+    <view class="tips_bida">第{{sorts}}题为必答题，</view>
+    <view class="tips_bida" style="margin-top: 9rpx;">去填写好您的答案后再来提交吧！</view>
+    <button bindtap="tips_hide">确定</button>
+  </view>
+</view>

@@ -1,0 +1,11 @@
+<!--pages/finish/finish.wxml-->
+<!-- <text>pages/finish/finish.wxml</text> -->
+<view class="box_finish">
+  <view class="fenxiang">快去分享给朋友吧</view>
+  <view class="shengc">您的专属海报已生成</view>
+  <image src="{{poster}}"></image>
+  <view class="bott_fi">
+    <button open-type='share'>分享给朋友</button>
+    <button bindtap="canvasdraw">保存到相册</button>
+  </view>
+</view>

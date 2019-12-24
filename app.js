@@ -35,6 +35,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    url:'https://travel.bestlsw.top'
+    url:'https://exercises.bestlsw.top'
   }
 })

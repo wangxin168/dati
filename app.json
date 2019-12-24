@@ -10,7 +10,8 @@
     "pages/huodong/huodong",
     "pages/ziliao/ziliao",
     "pages/zuoti/zuoti",
-    "pages/que_act/que_act"
+    "pages/que_act/que_act",
+    "pages/finish/finish"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -8,8 +8,9 @@
   padding: 0 50rpx 0 0;
   box-sizing: border-box;
   margin-top: 20rpx;
-}
 
+}
+/* .top li p:nth-of-type() */
 .top .leixing {
   width: 115rpx;
   height: 50rpx;
@@ -251,4 +252,48 @@
   padding: 0 25rpx;
   box-sizing: border-box;
   font-size: 30rpx;
+}
+.tips_box{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0, 0.6);
+  /* display: none; */
+}
+.tips_box .tips{
+  width: 537rpx;
+  height: 387rpx;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  left: 107rpx;
+  background: #FFFFFF;
+  border-radius: 22rpx;
+}
+.tips_title{
+  margin-top: 40rpx;
+  text-align: center;
+  font-size: 34rpx;
+  color: #3F3F3F;
+}
+.tips_bida{
+  font-size: 28rpx;
+  color: #7B7B7B;
+  margin-top: 39rpx;
+  text-align: center;
+}
+.tips button{
+  width: 223rpx;
+  height: 68rpx;
+  text-align: center;
+  line-height: 68rpx;
+  background: #3D3D3D;
+  border-radius: 38rpx;
+  font-size: 30rpx;
+  color: #FFFFFF;
+  letter-spacing: 0.54rpx;
+  margin: 61rpx auto 0;
 }

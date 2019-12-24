@@ -50,7 +50,11 @@ Page({
     json2:{},
     prev_page:0,
     next_page:0,
-    active:[]
+    active:[],
+    looked:[],
+    key_con_len:[],
+    sorts:'',
+    tips_box:false
   },
 
   /**
@@ -106,14 +110,16 @@ Page({
   // 多选
   duoxuan: function (e) {
     var that = this;
-    let json = JSON.parse(JSON.stringify(this.data.json))
+    let json = JSON.parse(JSON.stringify(that.data.json))
     // 这个题的下标
     var duo_index_aa = e.currentTarget.dataset.duo;
     // 下表变成字母
     var duo_index = that.data.zimu[duo_index_aa]
     // console.log(duo_index)
     var duo_id = e.currentTarget.dataset.id;
-    if (json[duo_id].indexOf(duo_index) === -1) {
+    console.log(duo_id)
+    console.log(json[duo_id])
+    if (json[duo_id].indexOf(duo_index) == -1) {
       json[duo_id].push(duo_index)
     } else {
       json[duo_id].splice(json[duo_id].indexOf(duo_index), 1)
@@ -191,13 +197,15 @@ Page({
   // 表格多选
   newold: function (e) {
     var that = this;
-    let json2 = JSON.parse(JSON.stringify(this.data.json2))
+    let json2 = JSON.parse(JSON.stringify(that.data.json2))
     var oldd_index = e.currentTarget.dataset.oldd;
     var oldd_index2 = that.data.zimu[oldd_index]
     // console.log(duo_index)
     var oldd_id = e.currentTarget.dataset.id;
     that.data.timedan_id = oldd_id
     var tiku = that.data.active
+    console.log(oldd_id)
+    console.log(json2)
     if (json2[oldd_id].indexOf(oldd_index2) === -1) {
       json2[oldd_id].push(oldd_index2)
     } else {
@@ -212,7 +220,7 @@ Page({
         // console.log(answer)
         var key_con = that.data.zimu[that.data.page - 1]
         var answer = that.data.all[key_con]
-        console.log(answer)
+        // console.log(answer)
         answer.forEach(function (element, index) {
           // console.log(element)
           // console.log(json2[oldd_id])
@@ -221,7 +229,7 @@ Page({
             that.data.all[key_con][index].answer = that.data.timedanid + '|' + json2[oldd_id].join(';') + '|'+that.data.chengid
           }
         });
-        console.log(that.data.all[key_con])
+        // console.log(that.data.all[key_con])
         // let detailValue = duoxuanxiang.filter(it => it.is_f).map(it => duo_index)
         // console.log('所有选中的值为：', detailValue)
 
@@ -533,6 +541,7 @@ Page({
     var that = this;
     // 属性加点
     var tiku = that.data.tiku
+    that.data.daan_arr=[]
     // var shu = that.data.shuxing=[]
     // // console.log(shu)
     // for (var i = 0; i < tiku.length; i++) {
@@ -568,26 +577,28 @@ Page({
     //     console.log(that.data.all[key_con][index])
     //   }
     // });
-    console.log(that.data.all)
+    // console.log(that.data.all)
     var is_sub=0
     for (var j=0;j<=that.data.page-1;j++){
       var a = that.data.zimu[j]
       // console.log(that.data.all[a].concat(that.data.all[a]))
       var app = that.data.all[a];
       app.forEach(function (element, index) {
-        // console.log(element)
+        
         if (element.answer == '' && element.is_xuantian==0){
-          wx.showToast({
-            title: '有必答题没有填哦',
-            icon:'none'
+
+          // console.log(element.sorts)
+          that.setData({
+            sorts : element.sorts,
+            // tips_box:true
           })
-          console.log(element.ti_tree)
+          // console.log(that.data.sorts)
+          // console.log(that.data.tips_box)
           is_sub=1
         }
-        var b = { 'id': element.id, 'value': element.answer, 'ti_type': element.ti_type }
-        // console.log(b)
-        that.data.daan_arr.push(b)
-        // console.log(that.data.daan_arr)
+          var b = { 'id': element.id, 'value': element.answer, 'ti_type': element.ti_type }
+          // console.log(b)
+          that.data.daan_arr.push(b)
       });
     }
     if (is_sub==0){
@@ -605,8 +616,25 @@ Page({
         },
         success(res) {
           console.log(res)
+          wx.showToast({
+            title: res.message,
+            icon:'none'
+          })
+          if(res.data.code==1){
+            wx.navigateTo({
+              url: '../finish/finish?activity_id=' + that.data.activity_id
+            })
+          }
         }
       })
+    }else{
+      console.log(that.data.sorts)
+      if (that.data.sorts!=''){
+        that.setData({
+          tips_box:true
+        })
+      }
+      // console.log(that.data.tips_box)
     }
     
     // that.data.daan_arr.forEach(function(element,index){
@@ -733,17 +761,57 @@ Page({
           var array = that.data.all
           var key_con = that.data.zimu[that.data.page - 1]
           // 给对象加key
-          that.data.all[key_con] = res.data.data.tiku
+          // that.data.all[key_con] = res.data.data.tiku
           // console.log(that.data.all)
-          // console.log(that.data.all[key_con])
-
+          // console.log(key_con)
+          // 把所有看过的页数push到一个数组里 进行判断
+          that.data.looked.push(key_con)
+          console.log(that.data.looked)
+          // 定义一个数组 执行后变空
+          that.data.key_con_len=[]
+          // 遍历looked 判断是第几次到这个页面
+          that.data.looked.forEach(function(element,index){
+            // 如果没在数组里就渲染请求的数据  若有就渲染all里的数据
+            // console.log(element)
+            if (element == key_con){
+              that.data.key_con_len.push(element)
+              console.log(that.data.key_con_len.length)
+              
+            }
+            // if (that.data.looked[index].indexOf(key_con) == -1){
+            //   console.log('没有')
+              
+            //   // console.log(that.data.all[key_con])
+              
+            // }else{
+            //   console.log('有')
+              
+            //   // console.log(that.data.active)
+            // }
+          })
+          if (that.data.key_con_len.length >= 2) {
+            var page_af = that.data.page - 1
+            // console.log(key_con)
+            that.setData({
+              active: that.data.all[key_con]
+            })
+            console.log(that.data.active)
+          } else {
+            that.data.all[key_con] = res.data.data.tiku
+            that.setData({
+              active: res.data.data.tiku
+            })
+            console.log(that.data.active)
+          }
           that.data.answer_arr = that.data.all[key_con]
-          console.log(that.data.answer_arr)
+          // console.log(that.data.answer_arr)
+
           that.setData({
             tiku: res.data.data.tiku,
             totalpage: res.data.data.totalpage,
-            active: that.data.all[key_con]
+            // active: that.data.all[key_con]
           })
+          
           var classid = ''
           var tiku = that.data.tiku
           let json = {}
@@ -824,16 +892,76 @@ Page({
 
     if (that.data.page <= that.data.totalpage) {
       that.xuanran();
+      
     }
-
+    // console.log(that.data.page)
   },
   prev: function () {
     var that = this;
     that.setData({
       page: that.data.page - 1
     })
+    
+    var page_af = that.data.page - 1
+    var page_after = that.data.zimu[page_af]
+    // console.log(page_after)
+    // console.log(that.data.all[page_after])
 
-    that.xuanran();
+    // 会显示多选的json拿不到  所以要 重新赋值
+    var duo_id = that.data.duo_id
+    // console.log(duo_id)
+    var timedan_id = that.data.timedan_id
+    console.log(timedan_id)
+    that.data.all[page_after].forEach(function (element, index) {
+      // console.log(element)
+      if (element.id == duo_id){
+        // console.log(element.answer)
+        // console.log(element.answer.split(';'));
+        var arr = element.answer.split(';')
+        that.data.json[duo_id] = arr
+        console.log(that.data.json)
+      } else if (element.id == timedan_id){
+        console.log(element.answer.split('|')[1])
+        var ele_answer = element.answer.split('|')[1]
+        that.data.json2[timedan_id] = ele_answer.split(';');
+      }
+    })
+    
+
+    // 上一页是不可以请求接口获取数据  需要获取之前保存的数据  因为要回显
+    that.active = that.data.all[page_after]
+    
+    that.setData({
+      active: that.active
+    })
+    // that.xuanran();
+    // console.log(that.data.prev_page)
+
+    if (that.data.page == 1) {
+      that.setData({
+        prev_page: 1
+      })
+    } else {
+      that.setData({
+        prev_page: 0
+      })
+    }
+
+    if (that.data.page == that.data.totalpage) {
+      that.setData({
+        next_page: 1
+      })
+    } else {
+      that.setData({
+        next_page: 0
+      })
+    }
+  },
+  tips_hide:function(){
+    var that=this;
+    that.setData({
+      tips_box: false
+    })
   },
   /**
    * 生命周期函数--监听页面隐藏
