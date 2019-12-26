@@ -112,9 +112,12 @@ Page({
         console.log(res)
         if(res.data.code==1){
           if (res.data.data.userinfo.is_complete==0){
-            wx.navigateTo({
-              url: '/pages/ziliao/ziliao',
+            that.setData({
+              wanshan:true
             })
+            // wx.navigateTo({
+            //   url: '/pages/ziliao/ziliao',
+            // })
           } else{
             // console.log('已完善信息')
             wx.navigateTo({

@@ -119,8 +119,9 @@
   <view class="title">{{before}}、{{ques_detail.ti_tree}}</view>
   <picker  mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" value="{{index}}" range="{{multiArray}}">
     <view class="picker">
-      <!-- <text wx:if="{{xuanze==0}}">请选择</text> -->
-      <text>{{multiArray[0][multiIndex[0]]}} {{multiArray[1][multiIndex[1]]}}</text>
+      <text wx:if="{{opt_xuanze==0&&daan==''}}">请选择</text>
+      <text wx:if="{{opt_xuanze!=0}}">{{multiArray[0][multiIndex[0]]}} {{multiArray[1][multiIndex[1]]}}</text>
+      <text wx:if="{{opt_xuanze==0&&daan!=''}}">{{daan}}</text>
     </view>
   </picker>
 </view>
@@ -137,5 +138,6 @@
 <view class="bott">
   <view class="left" bindtap="prev" wx:if="{{prev_num==1}}">上一题</view>
   <view class="right" bindtap="next" wx:if="{{next_num==1}}">下一题</view>
-  <view class="subm" bindtap="subm">提交</view>
+  <view class="subm" bindtap="subm" wx:if="{{openids!=''}}">提交</view>
+  <button class="subm" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" wx:if="{{openids==''}}" style="width:170rpx;height:66rpx;line-height:66rpx;text-align:center;margin: 0;">提交</button>
 </view>

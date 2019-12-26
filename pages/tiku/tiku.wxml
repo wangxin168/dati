@@ -4,3 +4,23 @@
   <image src="{{item.icon}}"></image>
   <text>{{item.cate_name}}</text>
 </view>
+<!-- <view class="tips_box">
+  <view class="tips_con">
+    <view class="tips_white">
+      <view class="tips_img">
+        <image src="../../img/tips.png"></image>
+        <view>提示</view>
+      </view>
+      <view class="content_tips">
+        您在XX号未抽牌，现在可以去补牌，想个主题，并记录此刻心情。您今天剩余补牌次数为
+        <text class="{{num == 0 ? 'area-selected' : 'num'}}">{{num}}</text>
+        次，您可以通过转发获得补牌次数！
+      </view>
+      <view class="btn_tips">
+        <button class="q_card" wx:if="{{num!=0}}">马上补牌</button>
+        <button class="times">获取次数</button>
+      </view>
+    </view>
+    <image src="../../img/close.png" class="close"></image>
+  </view>
+</view> -->

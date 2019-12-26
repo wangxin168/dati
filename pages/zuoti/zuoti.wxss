@@ -83,6 +83,7 @@
   border-radius: 46px;
   font-size: 30rpx;
   color: #fff;
+  padding: 0;
 }
 
 .box {

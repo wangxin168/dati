@@ -124,10 +124,16 @@ Page({
     date: '',
     classone:[],
     classerji:[],
-    one_id: 1,
+    one_id: '',
     multiIndex: [0, 0],
     multiArray: [],
-    class_id:0
+    class_id:0,
+    opt_xuanze:0,
+    sub_sheng:'',
+    sub_shi:'',
+    diqv_gaibian:0,
+    json:{},
+    openids:''
   },
 
   /**
@@ -167,25 +173,46 @@ Page({
   // 多选
   duoxuan: function (e) {
     var that = this;
+    // let json = JSON.parse(JSON.stringify(that.data.json))
     var newxuanxiang2 = that.data.options;
     var duo_index = e.currentTarget.dataset.duo;
+    console.log(duo_index)
+    // console.log(json[duo_index])
+
     newxuanxiang2[duo_index].is_f = !newxuanxiang2[duo_index].is_f
+    
     that.setData({
       options: newxuanxiang2
     })
+
     // 有就删除没有就添加
-    let pos = that.data.options.indexOf(duo_index);
-    if (pos < 0) {
-      that.data.duoarr.push(duo_index)
+    var zimu_duo = that.data.zimu[duo_index]
+    let pos = that.data.options.indexOf(zimu_duo);
+    // console.log(newxuanxiang2[duo_index].is_f)
+    if (pos < 0 && (newxuanxiang2[duo_index].is_f)==true) {
+      console.log(111)
+      that.data.duoarr.push(zimu_duo)
+      
     } else {
-      that.data.duoarr.splice(pos, 1)
+      console.log(zimu_duo)
+      // that.data.duoarr.splice(duo_index, 1)
+      that.data.duoarr.forEach(function(element,index){
+        if (element == zimu_duo){
+          that.data.duoarr.splice(index, 1)
+        }
+      })
+      
     }
-    for (var i = 0; i < that.data.duoarr.length; i++) {
-      var duoarr_i = that.data.duoarr[i]
-      that.data.arr_duo.push(that.data.zimu[duoarr_i])
-    }
-    var arr = Array.from(new Set(that.data.arr_duo))
-    var arr_duoxuan = arr.join(";");
+
+    console.log(that.data.duoarr)
+    // for (var i = 0; i < that.data.duoarr.length; i++) {
+    //   var duoarr_i = that.data.duoarr[i]
+    //   that.data.arr_duo.push(that.data.zimu[duoarr_i])
+    // }
+    
+    // var arr = Array.from(new Set(that.data.arr_duo))
+    // console.log(arr)
+    var arr_duoxuan = that.data.duoarr.join(";");
     that.setData({
       write_daan: arr_duoxuan
     })
@@ -348,6 +375,7 @@ Page({
   // 提交
   subm: function () {
     var that = this;
+    console.log(1111)
     // 属性加点
     if (that.data.ti_type == 7) {
       if (that.data.shengqaun!=0){
@@ -401,19 +429,30 @@ Page({
       // 下拉
     } else if (that.data.ti_type == 3){
       if (that.data.opt_count==1){
-        that.setData({
-          write_daan: that.data.xiala_options[that.data.index]
-        })
+        if (that.data.index!=''){
+          that.setData({
+            write_daan: that.data.xiala_options[that.data.index]
+          })
+        }else{
+          console.log('为空')
+        }
+        
       } else if (that.data.opt_count == 2){
         if (that.data.select_type==1){
-          that.setData({
-            xiala: [that.data.xiala_options[that.data.index], that.data.xiala_options2[that.data.diernali]]
-          })
-          var xiala = that.data.xiala.join(";");
-          console.log(xiala)
-          that.setData({
-            write_daan: xiala
-          })
+          console.log(that.data.diernali)
+          if (that.data.diernali != '' && that.data.index!=''){
+            that.setData({
+              xiala: [that.data.xiala_options[that.data.index], that.data.xiala_options2[that.data.diernali]]
+            })
+            var xiala = that.data.xiala.join(";");
+            console.log(xiala)
+            that.setData({
+              write_daan: xiala
+            })
+          }else{
+            console.log('为空')
+          }
+         
         } else if (that.data.select_type == 2){
           that.setData({
             write_daan:that.data.date
@@ -421,11 +460,36 @@ Page({
         } else if (that.data.select_type == 3) {
           console.log(that.data.one_id)
           console.log(that.data.class_id)
-          console.log(that.data.multiArray)
-          // that.setData({
-          //   write_daan: that.data.date
-          // })
+          console.log(that.data.class_one)
+          if (that.data.one_id!=''){
+            that.data.class_one.forEach(function (element, index) {
+              // console.log(element)
+              if (element.id == that.data.one_id) {
+                // console.log(element.area_name)
+                that.data.sub_sheng = element.area_name
+              }
+            })
+            that.data.classerji.forEach(function (element, index) {
+              if (element.id == that.data.class_id) {
+                // console.log(element.area_name)
+                that.data.sub_shi = element.area_name
+              }
+            })
+            // console.log(that.data.multiArray)
+            if (that.data.daan != '' && that.data.diqv_gaibian == 0) {
+              that.setData({
+                write_daan: that.data.daan
+              })
+            } else {
+              that.setData({
+                write_daan: that.data.sub_sheng + ';' + that.data.sub_shi
+              })
+            }
+          }else{
+            console.log('为空')
+          }
         }
+          
         
       }
     }
@@ -439,9 +503,15 @@ Page({
       },
       success: res => {
         console.log(res)
+        that.data.write_daan=''
         if (res.data.code == 1) {
           wx.showToast({
             title: '提交成功',
+          })
+        }else{
+          wx.showToast({
+            title: res.data.msg,
+            icon:'none'
           })
         }
       }
@@ -520,16 +590,23 @@ Page({
             })
           }
           // 答案
+          // console.log(res.data.data.answer)
           if (res.data.data.answer != null) {
-            if (res.data.data.ti_type == 4 && res.data.data.ti_type == 5) {
-              that.setData({
-                daan: res.data.data.answer
-              })
+            if (res.data.data.ti_type == 4 || res.data.data.ti_type == 5) {
+              if (res.data.data.answer!=''){
+                that.setData({
+                  daan: res.data.data.answer,
+                  write_daan: res.data.data.answer
+                })
+              }
               // 单选渲染
             } else if (res.data.data.ti_type == 1) {
-              that.setData({
-                daan: res.data.data.answer
-              })
+              if (res.data.data.answer!=''){
+                that.setData({
+                  daan: res.data.data.answer,
+                  write_daan: res.data.data.answer
+                })
+              }
               var danxuan = that.data.zimu.indexOf(that.data.daan)
               let completeStatus = that.data.options[danxuan].is_f;
               that.data.options[danxuan].is_f = !that.data.options[danxuan].is_f
@@ -538,21 +615,30 @@ Page({
               })
               // 多选渲染
             } else if (res.data.data.ti_type == 2) {
-              that.setData({
-                daan: res.data.data.answer
-              })
-              var duoxuan = that.data.daan.split(";");
-              for (var i = 0; i < duoxuan.length;i++){
-                var danxuan = that.data.zimu.indexOf(duoxuan[i])
-                console.log(danxuan)
-                that.data.options[danxuan].is_f = !that.data.options[danxuan].is_f
+              if (res.data.data.answer!=''){
                 that.setData({
-                  options: that.data.options
+                  daan: res.data.data.answer,
+                  write_daan: res.data.data.answer
                 })
+                var duoxuan = that.data.daan.split(";");
+                that.data.duoarr = that.data.duoarr.concat(duoxuan);
+                console.log(that.data.duoarr)
+                if (duoxuan.length >= 1) {
+                  console.log(222)
+                  for (var i = 0; i < duoxuan.length; i++) {
+                    var danxuan = that.data.zimu.indexOf(duoxuan[i])
+
+                    that.data.options[danxuan].is_f = !that.data.options[danxuan].is_f
+                    that.setData({
+                      options: that.data.options
+                    })
+                  }
+                }
               }
             } else if (res.data.data.ti_type == 7) {
               that.setData({
-                daan: res.data.data.answer
+                daan: res.data.data.answer,
+                write_daan: res.data.data.answer
               })
               var duoxuan = that.data.daan.split(";");
               for (var i = 0; i < duoxuan.length; i++) {
@@ -564,7 +650,8 @@ Page({
               // 属性单选
             } else if (res.data.data.ti_type == 6) {
               that.setData({
-                daan: res.data.data.answer
+                daan: res.data.data.answer,
+                write_daan: res.data.data.answer
               })
               // console.log(that.data.daan.split('|'))
               var rrrrr = that.data.daan.split('|')
@@ -591,7 +678,8 @@ Page({
               if(that.data.opt_count==1){
                 that.setData({
                   daan: res.data.data.answer,
-                  xuanze: 1
+                  xuanze: 1,
+                  write_daan: res.data.data.answer
                 })
                 that.setData({
                   index: that.data.xiala_options.indexOf(that.data.daan)
@@ -601,8 +689,10 @@ Page({
                   that.setData({
                     daan: res.data.data.answer,
                     xuanze: 1,
-                    xuanze2: 1
+                    xuanze2: 1,
+                    write_daan: res.data.data.answer
                   })
+                  
                   var duoxuan = that.data.daan.split(";");
                   that.setData({
                     index: that.data.xiala_options.indexOf(duoxuan[0]),
@@ -612,10 +702,20 @@ Page({
                   that.setData({
                     daan: res.data.data.answer,
                     xuanze: 1,
+                    write_daan: res.data.data.answer
                   })
                   that.setData({
                     date: that.data.daan
                   })
+                }else{
+                  that.setData({
+                    daan: res.data.data.answer,
+                    xuanze: 1,
+                    xuanze2: 1,
+                    write_daan: res.data.data.answer
+                  })
+                  console.log(that.data.opt_xuanze)
+                  console.log(that.data.daan)
                 }
               }
             }
@@ -628,10 +728,11 @@ Page({
   bindMultiPickerColumnChange: function (e) {
     //e.detail.column 改变的数组下标列, e.detail.value 改变对应列的值
     console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
-
+    this.data.diqv_gaibian=1
     var data = {
       multiArray: this.data.multiArray,
-      multiIndex: this.data.multiIndex
+      multiIndex: this.data.multiIndex,
+      opt_xuanze:1
     };
     data.multiIndex[e.detail.column] = e.detail.value;
     var teach_area_id_session = this.data.teach_id;　　　　// 保持之前的校区id 与新选择的id 做对比，如果改变则重新请求数据
@@ -657,6 +758,9 @@ Page({
     var classList = this.data.classerji;
 
     var select_key = e.detail.value[1];
+    if (select_key==null){
+      select_key=0
+    }
     var real_key = select_key;
     if (real_key < class_key) {
       this.setData({
@@ -670,7 +774,7 @@ Page({
     this.setData({
       multiIndex: e.detail.value
     })
-    console.log(this.data.class_id)
+    // console.log(this.data.class_id)
   },
   erji: function (classid) {
     if (classid) {
@@ -703,11 +807,62 @@ Page({
       }
     })
   },
+  onGotUserInfo: function (event) {
+    var that = this;
+    console.log(event)
+    let allDatas = event.detail.userInfo
+    wx.setStorageSync('userImg', allDatas.avatarUrl);
+    wx.setStorageSync('userNames', allDatas.nickName);
+    wx.login({
+      success: res => {
+        // 授权
+        wx.request({
+          url: getApp().globalData.url + '/api.php/home/api/get_openid_api',
+          data: {
+            code: res.code
+          },
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success(res) {
+            console.log(res)
+            if (res.data.code == 1) {
+              wx.setStorageSync('openids', res.data.data.user_info.openid);
+              wx.setStorageSync('uid', res.data.data.user_info.uid);
+              that.setData({
+                openids: wx.getStorageSync('openids')
+              })
+              // 成功之后传头像昵称给后台
+              wx.request({
+                url: getApp().globalData.url + '/api.php/home/api/save_info',
+                data: {
+                  uid: res.data.data.user_info.uid,
+                  avatar: allDatas.avatarUrl,
+                  nickname: allDatas.nickName
+                },
+                header: {
+                  'content-type': 'application/json' // 默认值
+                },
+                success(res) {
+                  console.log(res)
+                  that.onShow()
+                }
+              })
+            }
+          }
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
     var that = this;
+    that.setData({
+      openids: wx.getStorageSync('openids')
+    })
+    console.log(that.data.openids)
     that.xuanran();
   },
   next: function () {
@@ -716,7 +871,8 @@ Page({
     that.xuanran();
     if (that.data.sorts == that.data.total) {
       that.setData({
-        next_num: 0
+        next_num: 0,
+        opt_xuanze:0
       })
     }
   },
@@ -725,7 +881,8 @@ Page({
     that.data.sorts = Number(that.data.sorts) - 1
     that.xuanran()
     that.setData({
-      next_num: 1
+      next_num: 1,
+      opt_xuanze:0
     })
   },
 

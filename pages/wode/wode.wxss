@@ -15,6 +15,12 @@ page{
   display: block;
   margin: 59rpx auto 53rpx;
   border-radius: 50px;
+  text-align: center;
+  line-height: 129rpx;
+  background: #D8D8D8;
+  font-size: 24rpx;
+  color: #8F8F8F;
+  padding: 0;
 }
 .box_ul{
   width: 693rpx;
@@ -44,3 +50,4 @@ page{
   height: 25rpx;
 
 }
+

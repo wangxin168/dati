@@ -1,9 +1,13 @@
 <!--logs.wxml-->
-<view wx:for="{{act}}" wx:key="index" class="box">
+<view wx:for="{{act}}" wx:key="index" class="box" wx:if="{{openids!=''}}">
   <view class="title" wx:if="{{item.is_complete==0}}">正在匹配</view>
   <view class="title" wx:if="{{item.is_complete==1}}">匹配成功</view>
   <view class="title_mini" wx:if="{{item.is_complete==0}}">请耐心等待匹配结果</view>
   <view class="title_mini" wx:if="{{item.is_complete==1}}">您可以点击图片查看详情</view>
   <image src="{{item.list_img}}" wx:if="{{item.is_complete==0}}" bindtap="pi_xiang" data-xiang="{{item.is_complete}}" data-activity_id="{{item.activity_id}}"></image>
   <image src="{{item.list_img}}" wx:if="{{item.is_complete==1}}" bindtap="pi_xiang" data-xiang="{{item.is_complete}}" data-activity_id="{{item.activity_id}}"></image>
+</view>
+<view class="no_login" wx:if="{{openids==''}}">
+  <view class="login_con">暂未授权，请授权登录后再查看</view>
+  <button class="shouquan" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">立即授权</button>
 </view>

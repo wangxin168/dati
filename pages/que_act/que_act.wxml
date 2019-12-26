@@ -135,7 +135,7 @@
 <view class="tips_box" wx:if="{{tips_box==true}}">
   <view class="tips">
     <view class="tips_title">提示</view>
-    <view class="tips_bida">第{{sorts}}题为必答题，</view>
+    <view class="tips_bida">您有必答题未填，</view>
     <view class="tips_bida" style="margin-top: 9rpx;">去填写好您的答案后再来提交吧！</view>
     <button bindtap="tips_hide">确定</button>
   </view>

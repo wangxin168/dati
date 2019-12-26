@@ -22,3 +22,23 @@ page{
   height: 540rpx;
   margin-top: 30rpx;
 }
+.no_login{
+  margin-top: 400rpx;
+}
+.no_login .login_con{
+  font-size: 28rpx;
+  color: #7B7B7B;
+  text-align: center;
+}
+.no_login button{
+  width: 223rpx;
+  height: 68rpx;
+  background: #3D3D3D;
+  border-radius: 38rpx;
+  font-size: 30rpx;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 68rpx;
+  margin: auto;
+  margin-top: 50rpx;
+}

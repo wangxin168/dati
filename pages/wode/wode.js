@@ -6,7 +6,8 @@ Page({
    */
   data: {
     avatar:'',
-    nickname:''
+    nickname:'',
+    openids:''
   },
 
   /**
@@ -16,14 +17,32 @@ Page({
 
   },
   huodong:function(){
-    wx.navigateTo({
-      url: '/pages/huodong/huodong',
-    })
+    var that=this;
+    if (that.data.openids==''){
+      wx.showToast({
+        title: '您未登录，请先登录哦',
+        icon:'none'
+      })
+    }else{
+      wx.navigateTo({
+        url: '/pages/huodong/huodong',
+      })
+    }
+    
   },  
   ziliao:function(){
-    wx.navigateTo({
-      url: '/pages/ziliao/ziliao',
-    })
+    var that=this;
+    if (that.data.openids == '') {
+      wx.showToast({
+        title: '您未登录，请先登录哦',
+        icon: 'none'
+      })
+    }else{
+      wx.navigateTo({
+        url: '/pages/ziliao/ziliao',
+      })
+    }
+    
   },
 
   /**
@@ -38,6 +57,10 @@ Page({
    */
   onShow: function () {
     var that = this;
+    that.setData({
+      openids: wx.getStorageSync('openids')
+    })
+    console.log(that.data.openids=="")
     wx.request({
       url: getApp().globalData.url + '/api.php/home/index/user_center',
       data: {
@@ -57,7 +80,53 @@ Page({
       }
     })
   },
-
+  onGotUserInfo: function (event) {
+    var that = this;
+    console.log(event)
+    let allDatas = event.detail.userInfo
+    wx.setStorageSync('userImg', allDatas.avatarUrl);
+    wx.setStorageSync('userNames', allDatas.nickName);
+    wx.login({
+      success: res => {
+        // 授权
+        wx.request({
+          url: getApp().globalData.url + '/api.php/home/api/get_openid_api',
+          data: {
+            code: res.code
+          },
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success(res) {
+            console.log(res)
+            if (res.data.code == 1) {
+              wx.setStorageSync('openids', res.data.data.user_info.openid);
+              wx.setStorageSync('uid', res.data.data.user_info.uid);
+              that.setData({
+                openids: wx.getStorageSync('openids')
+              })
+              // 成功之后传头像昵称给后台
+              wx.request({
+                url: getApp().globalData.url + '/api.php/home/api/save_info',
+                data: {
+                  uid: res.data.data.user_info.uid,
+                  avatar: allDatas.avatarUrl,
+                  nickname: allDatas.nickName
+                },
+                header: {
+                  'content-type': 'application/json' // 默认值
+                },
+                success(res) {
+                  console.log(res)
+                  that.onShow()
+                }
+              })
+            }
+          }
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

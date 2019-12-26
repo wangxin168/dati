@@ -10,7 +10,8 @@ Page({
       { img: '../../img/hab.png', text: '兴趣爱好类' },
       { img: '../../img/succ.png', text: '个人成就类' }
     ],
-    category_lst:[]
+    category_lst:[],
+    // num:2
   },
 
   /**
